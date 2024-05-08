@@ -5,13 +5,24 @@ import pickle
 
 app = Flask(__name__)
 
+# Load the feature extractor and model
 featureExtractor = pickle.load(open('models/featureExtractionVectorizer.pkl', 'rb'))
-valid = []
-spam = []
+model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
+
+# Load the saved valid and spam arrays
+try:
+    valid = pickle.load(open('valid.pkl', 'rb'))
+    spam = pickle.load(open('spam.pkl', 'rb'))
+except:
+    valid = []
+    spam = []
 
 @app.route('/')
 def home():
-    return render_template('index.html', valid=valid, spam=spam)
+    model
+    pickle.dump(valid, open('valid.pkl', 'wb'))
+    pickle.dump(spam, open('spam.pkl', 'wb'))
+    return render_template('index.html', valid=valid, spam=spam, usedModel=model)
 
 @app.route('/predict',methods=['POST'])
 def predict():
@@ -29,6 +40,9 @@ def predict():
         else:
             spam.append(concatenated_string)
         print(model)
+
+        pickle.dump(valid, open('valid.pkl', 'wb'))
+        pickle.dump(spam, open('spam.pkl', 'wb'))
         return render_template('index.html', prediction=result, usedModel=model, valid=valid, spam=spam)
     except:
         print()
@@ -50,6 +64,9 @@ def select():
         model = pickle.load(open('models/KNeighborsClassifier.pkl', 'rb'))
     else:
         model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
+
+    pickle.dump(valid, open('valid.pkl', 'wb'))
+    pickle.dump(spam, open('spam.pkl', 'wb'))
 
     return render_template('index.html', usedModel=form_values[0], vaild=valid, spam=spam)
 
