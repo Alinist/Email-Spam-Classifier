@@ -69,7 +69,7 @@ button:hover:not(#selButton) {
 .flex {
   width: 100%;
   display: flex;
-  background: linear-gradient(to right, white 20%, #a3b7fb);
+  background: linear-gradient(to right, white 15%, #a3b7fb);
 }
 
 #options {

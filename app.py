@@ -72,9 +72,6 @@ def select():
     elif form_values[0] == "SVC(kernel='linear')":
         model = pickle.load(open('models/SVC.pkl', 'rb'))
         accuracyTest, accuracyTrain = accuracies["SVC"][0], accuracies["SVC"][1]
-    elif form_values[0] == "MultinomialNB()":
-        model = pickle.load(open('models/MultinomialNB.pkl', 'rb'))
-        accuracyTest, accuracyTrain = accuracies["MultinomialNB"][0], accuracies["MultinomialNB"][1]
     elif form_values[0] == "RandomForestClassifier(random_state=42)":
         model = pickle.load(open('models/RandomForestClassifier.pkl', 'rb'))
         accuracyTest, accuracyTrain = accuracies["RandomForestClassifier"][0], accuracies["RandomForestClassifier"][1]
