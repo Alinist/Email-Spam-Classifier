@@ -67,8 +67,9 @@ button:hover:not(#selButton) {
 }
 
 .flex {
+  width: 100%;
   display: flex;
-  background: linear-gradient(to right, white, #a3b7fb);
+  background: linear-gradient(to right, white 20%, #a3b7fb);
 }
 
 #options {
@@ -273,10 +274,10 @@ nav form {
   color: white;
 }
 
-#predictContainer::after {
-  content: 'Predicition : ';
+#predictContainer h2 {
+  color: black;
   position: absolute;
-  top: -55px;
+  top: -75px;
   left: 50%;
   transform: translateX(-50%);
   font: 32px bold;
