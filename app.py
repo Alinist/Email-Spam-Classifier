@@ -13,9 +13,11 @@ model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
 try:
     valid = pickle.load(open('valid.pkl', 'rb'))
     spam = pickle.load(open('spam.pkl', 'rb'))
+    accuracies = pickle.load(open('accuracies.pkl', 'rb'))
 except:
     valid = []
     spam = []
+    accuracies = []
 
 @app.route('/')
 def home():
@@ -26,6 +28,7 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
+    accuracyTrain, accuracyTest
     try:
         form_values = list(request.form.values())
         str_features = [str(x) for x in form_values]
@@ -33,7 +36,7 @@ def predict():
         str_features.clear()
         str_features.append(concatenated_string)
         features = featureExtractor.transform(str_features)
-        prediction = model.predict(features) 
+        prediction = model.predict(features)
         result = prediction[0]
         if result == 0:
             valid.append(concatenated_string)
@@ -43,7 +46,8 @@ def predict():
 
         pickle.dump(valid, open('valid.pkl', 'wb'))
         pickle.dump(spam, open('spam.pkl', 'wb'))
-        return render_template('index.html', prediction=result, usedModel=model, valid=valid, spam=spam)
+        print(str(accuracyTest) + " " + str(accuracyTrain))
+        return render_template('index.html', prediction=result, usedModel=model, valid=valid, spam=spam, accuracyTest=accuracyTest, accuracyTrain=accuracyTrain)
     except:
         print()
         return render_template('index.html')
@@ -51,23 +55,32 @@ def predict():
 @app.route('/select',methods=['POST'])
 def select():
     global model
+    global accuracyTrain
+    global accuracyTest
     form_values = list(request.form.values())
     if form_values[0] == "DecisionTreeClassifier()":
         model = pickle.load(open('models/DecisionTreeClassifier.pkl', 'rb'))
+        accuracyTest, accuracyTrain = accuracies["DecisionTreeClassifier"][0], accuracies["DecisionTreeClassifier"][1]
     elif form_values[0] == "SVC(kernel='linear')":
         model = pickle.load(open('models/SVC.pkl', 'rb'))
+        accuracyTest, accuracyTrain = accuracies["SVC"][0], accuracies["SVC"][1]
     elif form_values[0] == "MultinomialNB()":
         model = pickle.load(open('models/MultinomialNB.pkl', 'rb'))
+        accuracyTest, accuracyTrain = accuracies["MultinomialNB"][0], accuracies["MultinomialNB"][1]
     elif form_values[0] == "RandomForestClassifier(random_state=42)":
         model = pickle.load(open('models/RandomForestClassifier.pkl', 'rb'))
+        accuracyTest, accuracyTrain = accuracies["RandomForestClassifier"][0], accuracies["RandomForestClassifier"][1]
     elif form_values[0] == "KNeighborsClassifier()":
         model = pickle.load(open('models/KNeighborsClassifier.pkl', 'rb'))
+        accuracyTest, accuracyTrain = accuracies["KNeighborsClassifier"][0], accuracies["KNeighborsClassifier"][1]
     else:
-        model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
+        model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))        
+        accuracyTest, accuracyTrain = accuracies["LogisticRegression"][0], accuracies["LogisticRegression"][1]
+    print(str(accuracyTest) + " " + str(accuracyTrain))
+
 
     pickle.dump(valid, open('valid.pkl', 'wb'))
     pickle.dump(spam, open('spam.pkl', 'wb'))
-
     return render_template('index.html', usedModel=form_values[0], vaild=valid, spam=spam)
 
 if __name__ == "__main__":
