@@ -1,3 +1,4 @@
+# imports
 import numpy as np
 from flask import Flask, request, render_template, jsonify
 import json
@@ -5,11 +6,11 @@ import pickle
 
 app = Flask(__name__)
 
-# Load the feature extractor and model
+# Load the feature extractor and models
 featureExtractor = pickle.load(open('models/featureExtractionVectorizer.pkl', 'rb'))
 model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
 
-# Load the saved valid and spam arrays
+# Load valid and spam arrays
 try:
     valid = pickle.load(open('valid.pkl', 'rb'))
     spam = pickle.load(open('spam.pkl', 'rb'))
@@ -19,6 +20,8 @@ except:
     spam = []
     accuracies = []
 
+
+# home menu
 @app.route('/')
 def home():
     model
@@ -26,9 +29,13 @@ def home():
     pickle.dump(spam, open('spam.pkl', 'wb'))
     return render_template('index.html', valid=valid, spam=spam, usedModel=model)
 
+
+# predict results
 @app.route('/predict',methods=['POST'])
 def predict():
-    accuracyTrain, accuracyTest
+    global model
+    global accuracyTrain
+    global accuracyTest
     try:
         form_values = list(request.form.values())
         str_features = [str(x) for x in form_values]
@@ -52,6 +59,7 @@ def predict():
         print()
         return render_template('index.html')
 
+# model selection
 @app.route('/select',methods=['POST'])
 def select():
     global model
@@ -76,6 +84,9 @@ def select():
     else:
         model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))        
         accuracyTest, accuracyTrain = accuracies["LogisticRegression"][0], accuracies["LogisticRegression"][1]
+
+    accuracyTest = "Test Accuracy :  " + str(round(accuracyTest, 4)*100) + "%"
+    accuracyTrain = "Train Accuracy :  " + str(round(accuracyTrain, 4)*100) + "%"
     print(str(accuracyTest) + " " + str(accuracyTrain))
 
 

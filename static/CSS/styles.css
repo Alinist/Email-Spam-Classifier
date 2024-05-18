@@ -68,6 +68,7 @@ button:hover:not(#selButton) {
 
 .flex {
   display: flex;
+  background: linear-gradient(to right, white, #a3b7fb);
 }
 
 #options {
@@ -86,6 +87,7 @@ button:hover:not(#selButton) {
 }
 
 button {
+  background-color: #E2E2E2;
   background-color: inherit;
   height: 3rem;
   border: none;
@@ -123,6 +125,7 @@ select {
   width: 100%;
   background-color: white;
   border-right: 1px solid rgb(201, 201, 201);
+  background: linear-gradient(to right, white, #a3b7fb);
 }
 
 .mail {
@@ -173,6 +176,7 @@ select {
 }
 
 #content {
+  background: linear-gradient(to right, white, #a3b7fb);
   padding: 10px 20px;
   display: flex;
   flex-direction: row;
@@ -259,13 +263,24 @@ nav form {
 #predictContainer {
   transform: translateY(15%);
   width: 40%;
-  height: 40vh;
+  height: 50vh;
   background-color: #1C1A27;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   border-radius: 10px;
   color: white;
+}
+
+#predictContainer::after {
+  content: 'Predicition : ';
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 32px bold;
+  height: 20px;
 }
 
 #predictContainer::before {
@@ -281,12 +296,12 @@ nav form {
   filter: blur(10px);
 }
 
-#predictContainer h3 {
-  font-size: 2rem;
+#predictContainer #predictionResult {
+  font-size: 2.5rem;
 }
 
-#predictContainer p {
-  font-size: 2.5rem;
+#predictContainer p:not(:first-child) {
+  font-size: 1.5rem;
 }
 
 /* width */

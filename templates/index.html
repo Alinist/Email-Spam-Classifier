@@ -37,7 +37,7 @@
     <div id="mails">
       <div id="validmails">
         <div>
-          <h2><i class="fa-solid fa-check" style="color: #04ff00;"></i>Valid Messages:</h2>
+          <h2 style="font-size: 30px;"><i class="fa-solid fa-check" style="color: #04ff00;"></i>Valid Messages:</h2>
           {% for message in valid %}
           <span></span>
           <div class="mail">{{ message }}</div>
@@ -47,7 +47,7 @@
       </div>
       <div id="spammails">
         <div>
-          <h2><i class="fa-solid fa-xmark" style="color: #ff0000;"></i>Spam Messages:</h2>
+          <h2 style="font-size: 30px;"><i class="fa-solid fa-xmark" style="color: #ff0000;"></i>Spam Messages:</h2>
           {% for message in spam %}
           <span></span>
           <div class="mail">{{ message }}</div>
@@ -69,10 +69,9 @@
         <button type="submit">Predict</button>
       </form>
       <div id="predictContainer">
-        <h3>Prediction :</h3>
         <p id="predictionResult">{{ prediction }}</p>
-        <p>Test Accuracy: {{ accuracyTest }}</p>
-        <p>Train Accuracy: {{ accuracyTrain }}</p>
+        <p>{{ accuracyTest }}</p>
+        <p>{{ accuracyTrain }}</p>
       </div>
     </div>
   </div>
