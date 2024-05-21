@@ -1,72 +1,33 @@
-Overview
+Email Classification System
+This project is an email classification system that categorizes emails as "spam" or "valid" based on various features, such as word frequencies, presence of spam keywords, and sender information. The system utilizes Support Vector Machines (SVM) to handle high-dimensional data often present in text classification tasks.
 
-Classify emails as "spam" or "valid" based on text.
-Features like word frequencies, presence of spam keywords, and sender information.
-SVM excels at handling high-dimensional data often present in text classification tasks.
-
-__________________________________________________
+Table of Contents
+Preprocessing
+Training Data
+Models
+Deployment
+<a name="preprocessing"></a>
 
 Preprocessing
+Explore the dataset: Basic information about each column is gathered, and numerical columns are described using functions like head(), tail(), and describe().
+Handle missing values: Nulls are checked and manipulated by dropping cells containing nulls or replacing their value with the median (for numeric data) or mode (for categorical data).
+Drop duplicated rows: Redundant data is removed by dropping duplicated rows.
+Select features: Columns "label" and "label num" are compared, and the numerical column is kept. The final feature selection is the "Text" column.
+<a name="training-data"></a>
 
-•	First, we explore through the dataset to see its features, call function head () and tail () to see data at each row, seeing basic information about each column, for numerical columns we need description for them, so we call function describe () , to  know  ( count , mean std, min , max…..etc.).
+Training Data
+Convert text to numerical data: The TfidfVectorizer technique is applied to convert the "Text" column to numerical data using a mathematical equation that calculates the frequency of strange words divided by the total words.
+Train the data: The data is prepared for different models by applying the TfidfVectorizer technique.
+<a name="models"></a>
 
-•	Then we need to check if nulls exist and manipulate them by dropping cells which contain nulls or replace their value with median value if numeric or mod if categorial.
-
-•	After that we need to drop duplicated rows if they exist because it makes redundancy in the data.
-
-•	There are two columns which have same target, to show is the text is spam or not spam so column named “label” is the same column named “label num” only difference is one is categorial and another is numerical, so keep numerical columns so a better thing is to drop column “label.”
-
-•	Last step we need to select the feature which the models will train on them, we inserted new column has name “size text "to see if length of a text will show us if the text is spam or not spam,
-
-•	But there was no difference, so we needed to try another way, we checked every text that was sent to how many people we found that the range between “send emails” in case of spam is not intersected with the range of “sent emails “in case of ham so we didn’t use “sent emails”.
-
-•	best way to define any text whether if it is spam or not is by text itself, most of text that was defined spam contains strange words and unrelated to English words, so here was the key to define the text spam or not.
-
-•	Our feature selection decided to be text and applying all models based on column “Text.”
- 
-__________________________________________________
-
-Training data
-
-•	We need two things before starting modeling on data, first convert column "Text" to something numerical so ai models can work on that column, second, technique to find the text which contains many words unrelated to English.
-
-•	TfidfVectorizer does exactly what we need, we applied this technique TfidfVectorizer does exactly what we need, we applied this technique to convert column "Text" to numerical by mathematical equation that calculates frequency of strange words divided by total words.
-
-•	At the same time, it does train the data to be ready to apply different models.
-
-
-__________________________________________________ 
-
-Models 
-
-•	We have done main three requirements' models which are:
-1.	Logistic regression
-2.	Decision tree classifier
-3.	SVM
-
-•	Additional to them, we added another two models to try different accuracies which are:
-1.	KNN
-2.	Random Forest classifier
-
-•	So, in total there are 5 AI (Artificial Intelligence) models.
-
-•	We take each model and apply to it the features and the target to fit in data, then display classification report that contains confusion matrix which tells us precision and recall
-
-•	After that we display overall accuracy for both the train and test data for each model. 
-
-•	We need to use a test called K-fold cross-validation in which the dataset is divided into k subsets or folds, the model is trained and evaluated k times, using a different fold as the validation set each time.	
-
-•	Finally, we display overall accuracy both for the train and test data for each model. 
-
-
-_______________________________________________ 
+Models
+Primary models: Logistic regression, Decision tree classifier, and SVM models are implemented.
+Additional models: K-Nearest Neighbors (KNN) and Random Forest classifier models are added to test for different accuracies.
+Model evaluation: Each model is applied to the features and target, and a classification report containing a confusion matrix is displayed to show precision and recall.
+Cross-validation: K-fold cross-validation is used to evaluate the models, and overall accuracy for both train and test data is displayed for each model.
+<a name="deployment"></a>
 
 Deployment
-
-•	Gui is made by web using HTML, CSS and JavaScript as the frontend and python flask as the backend
-
-•	Ai is ready to classify each new entered text to the system is spam or not spam.
-
-•	Users can select any of existing AI models and enter text and see whether text is spam or not spam and.
-
-•	Users can also see the selected models’ test accuracy and train accuracy.
+GUI: The graphical user interface is created using HTML, CSS, and JavaScript for the frontend and Python Flask for the backend.
+AI model integration: The AI model is ready to classify new entered text as spam or not spam.
+User interaction: Users can select existing AI models, enter text, and see whether the text is spam or not spam. Users can also view the selected models' test accuracy and train accuracy.
