@@ -1,7 +1,6 @@
 # imports
 import numpy as np
-from flask import Flask, request, render_template, jsonify
-import json
+from flask import Flask, request, render_template
 import pickle
 
 app = Flask(__name__)
@@ -10,7 +9,7 @@ app = Flask(__name__)
 featureExtractor = pickle.load(open('models/featureExtractionVectorizer.pkl', 'rb'))
 model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
 
-# Load valid and spam arrays
+# Load valid and spam arrays and the model accuracies
 try:
     valid = pickle.load(open('valid.pkl', 'rb'))
     spam = pickle.load(open('spam.pkl', 'rb'))
