@@ -5,15 +5,15 @@ import pickle
 
 app = Flask(__name__)
 
-# Load the feature extractor and models
+# load the feature extractor and models
 featureExtractor = pickle.load(open('models/featureExtractionVectorizer.pkl', 'rb'))
-model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
+# model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
 
-# Load valid and spam arrays and the model accuracies
+# load valid and spam arrays and the model accuracies
 try:
     valid = pickle.load(open('valid.pkl', 'rb'))
     spam = pickle.load(open('spam.pkl', 'rb'))
-    accuracies = pickle.load(open('accuracies.pkl', 'rb'))
+    accuracies = pickle.load(open('models/accuracies.pkl', 'rb'))
 except:
     valid = []
     spam = []
@@ -23,10 +23,10 @@ except:
 # home menu
 @app.route('/')
 def home():
-    model
+    # model
     pickle.dump(valid, open('valid.pkl', 'wb'))
     pickle.dump(spam, open('spam.pkl', 'wb'))
-    return render_template('index.html', valid=valid, spam=spam, usedModel=model)
+    return render_template('index.html', valid=valid, spam=spam)
 
 
 # predict results
@@ -91,4 +91,4 @@ def select():
     return render_template('index.html', usedModel=form_values[0], vaild=valid, spam=spam)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
