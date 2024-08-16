@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # load the feature extractor and models
 featureExtractor = pickle.load(open('models/featureExtractionVectorizer.pkl', 'rb'))
-# model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
+model = pickle.load(open('models/LogisticRegression.pkl', 'rb'))
 
 # load valid and spam arrays and the model accuracies
 try:
@@ -23,10 +23,7 @@ except:
 # home menu
 @app.route('/')
 def home():
-    # model
-    pickle.dump(valid, open('valid.pkl', 'wb'))
-    pickle.dump(spam, open('spam.pkl', 'wb'))
-    return render_template('index.html', valid=valid, spam=spam)
+    return render_template('index.html', valid=valid, spam=spam, usedModel = model)
 
 
 # predict results
@@ -48,14 +45,11 @@ def predict():
             valid.append(concatenated_string)
         else:
             spam.append(concatenated_string)
-        print(model)
 
         pickle.dump(valid, open('valid.pkl', 'wb'))
         pickle.dump(spam, open('spam.pkl', 'wb'))
-        print(str(accuracyTest) + " " + str(accuracyTrain))
         return render_template('index.html', prediction=result, usedModel=model, valid=valid, spam=spam, accuracyTest=accuracyTest, accuracyTrain=accuracyTrain)
     except:
-        print()
         return render_template('index.html')
 
 # model selection
@@ -83,12 +77,8 @@ def select():
 
     accuracyTest = "Test Accuracy :  " + str(round(accuracyTest, 4)*100) + "%"
     accuracyTrain = "Train Accuracy :  " + str(round(accuracyTrain, 4)*100) + "%"
-    print(str(accuracyTest) + " " + str(accuracyTrain))
 
-
-    pickle.dump(valid, open('valid.pkl', 'wb'))
-    pickle.dump(spam, open('spam.pkl', 'wb'))
-    return render_template('index.html', usedModel=form_values[0], vaild=valid, spam=spam)
+    return render_template('index.html', usedModel=form_values[0], valid=valid, spam=spam)
 
 if __name__ == "__main__":
     app.run()
